@@ -1,0 +1,6 @@
+= iii
+
+A command line interface to the Interactive Investor website (iii.co.uk)
+
+:include:iii.rdoc
+

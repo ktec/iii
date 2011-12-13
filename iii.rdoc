@@ -1,0 +1,56 @@
+= <tt>iii</tt>
+
+A command line interface to iii.co.uk
+
+    iii [global options] command_name [command-specific options] [--] arguments...
+
+* Use the command +help+ to get a summary of commands
+* Use the command <tt>help command_name</tt> to get a help for +command_name+
+* Use <tt>--</tt> to stop command line argument processing; useful if your arguments have dashes in them
+
+== Global Options
+These options are available for any command and are specified before the name of the command
+
+[<tt>-f, --flagname=The name of the argument</tt>] Describe some flag here <i>( default: <tt>the default</tt>)</i>
+[<tt>--help</tt>] Show this message
+[<tt>-s, --switch</tt>] Describe some switch here
+== Commands
+[<tt>consensus</tt>] Show consensus information for an investment product
+[<tt>get</tt>] Access details about individual investment products
+[<tt>help</tt>] Shows list of commands or help for one command
+[<tt>hot</tt>] List of the hottest investment products (use "| expand --tabs=14" if you want nice columns)
+
+=== <tt>consensus code [codes]</tt>
+
+Show consensus information for an investment product
+
+==== Options
+These options are specified *after* the command.
+
+[<tt>-p, --period=period</tt>] the period of time for consensus data
+[<tt>-t, --title</tt>] Show title
+=== <tt>get code [codes...]</tt>
+
+Access details about individual investment products
+
+=== <tt>help [command]</tt>
+
+Shows list of commands or help for one command
+
+Gets help for the application or its commands.  Can also list the commands in a way helpful to creating a bash-style completion function
+
+==== Options
+These options are specified *after* the command.
+
+[<tt>-c, --completion</tt>] List all commands one line at a time, for use with shell completion ([command] argument is partial command to match)
+=== <tt>hot hot</tt>
+
+List of the hottest investment products (use "| expand --tabs=14" if you want nice columns)
+
+==== Options
+These options are specified *after* the command.
+
+[<tt>-d, --delimiter=arg</tt>] Delimiter used <i>( default: <tt>	</tt>)</i>
+[<tt>-p, --plain</tt>] Show plain, no values just the list of stock symbols
+[<tt>-s, --sort=arg</tt>] Sort by [p|price|price_desc|ch|change|change_desc] <i>( default: <tt></tt>)</i>
+[<tt>--th, --table_headings</tt>] Show the table headings

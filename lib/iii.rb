@@ -1,0 +1,5 @@
+require 'iii/site'
+require 'iii/consensus'
+require 'iii/community'
+require 'iii/instrument'
+require 'iii/version'
