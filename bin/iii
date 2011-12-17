@@ -17,19 +17,24 @@ require 'iii'
 
 include GLI
 
-web = Iii::Site.set_credentials
+#http://www.iii.co.uk/investment/detail/?showthreads=0&threshold=3&code=cotn%3AHER.L&it=le&display=discussion
 
 program_desc 'A command line interface to iii.co.uk'
 
 version Iii::VERSION
 
-desc 'Describe some switch here'
-switch [:s,:switch]
+#desc 'Describe some switch here'
+#switch [:s,:switch]
 
-desc 'Describe some flag here'
-default_value 'the default'
-arg_name 'The name of the argument'
-flag [:f,:flagname]
+desc 'The username'
+default_value ''
+arg_name 'username'
+flag [:u,:user,:username]
+
+desc 'The password'
+default_value ''
+arg_name 'password'
+flag [:p,:pass,:password]
 
 desc 'List of the hottest investment products (use "| expand --tabs=14" if you want nice columns)'
 arg_name 'hot'
@@ -107,6 +112,8 @@ pre do |global,command,options,args|
   # chosen command
   # Use skips_pre before a command to skip this block
   # on that command only
+  web = Iii::Site.set_credentials(global[:username],global[:password])
+
   true
 end
 

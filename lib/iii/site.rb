@@ -11,18 +11,23 @@ module Iii
     class << self
       SECRET = "11eb254257566c6923c45bd84b570e100606463ab64c860ead9a94c8dace07f81465ed87d2fe7b531eb8d877e2afe33a39590237d34c12d324f717e8e79972eb"
       CONFIG_FILE = File.expand_path('~/.iiirc')
-      def set_credentials
-        Encryptor.default_options.merge!(:key => Digest::SHA256.hexdigest(SECRET))
-        begin
-          config = YAML.load_file(CONFIG_FILE)
-          raise if config[:credentials].empty?
-        rescue
-          config = ask_for_credentials
+      def set_credentials(username,password)
+        if username.empty? and password.empty?
+          Encryptor.default_options.merge!(:key => Digest::SHA256.hexdigest(SECRET))
+          begin
+            config = YAML.load_file(CONFIG_FILE)
+            raise if config[:credentials].empty?
+          rescue
+            config = ask_for_credentials
+            credentials = config[:credentials]
+          end
           credentials = config[:credentials]
+          @username = credentials[:username]
+          @password = credentials[:password].decrypt
+        else
+          @username = username
+          @password = password
         end
-        credentials = config[:credentials]
-        @username = credentials[:username]
-        @password = credentials[:password].decrypt
         browser
       end
 
