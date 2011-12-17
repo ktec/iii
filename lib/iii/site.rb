@@ -59,27 +59,14 @@ module Iii
       def authenticate
         browser = Mechanize.new
         browser.robots = false
-        begin
-          login_page = browser.get("http://www.iii.co.uk/reg/?lo=3")
-        rescue Mechanize::ResponseCodeError => exception
-          if exception.response_code == '403'
-            login_page = exception.page
-          else
-            raise # Some other error, re-raise
-          end
+        login_page = get_page do
+          browser.get("http://www.iii.co.uk/reg/?lo=3")
         end
-        begin
-          page = login_page.form_with({:name => "login_form"}) do |f|
+        page = get_page do
+          login_page.form_with({:name => "login_form"}) do |f|
             f.field_with(:id => 'iii-username').value = @username
             f.field_with(:id => 'iii-password').value = @password
           end.submit
-        rescue Mechanize::ResponseCodeError => exception
-          if exception.response_code == '403'
-            page = exception.page
-            #puts page.body
-          else
-            raise # Some other error, re-raise
-          end
         end
         begin
           page = page.form_with({:name => "show_login_redirect"}).submit
@@ -89,6 +76,18 @@ module Iii
         end
         #p page.body if page.body !~ /Sign out/
         browser
+      end
+
+      def get_page
+        begin
+          yield
+        rescue Mechanize::ResponseCodeError => exception
+          if exception.response_code == '403'
+            exception.page
+          else
+            raise # Some other error, re-raise
+          end
+        end
       end
 
       def get(uri)
