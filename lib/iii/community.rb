@@ -22,8 +22,8 @@ module Iii
 	    @delimiter = options[:delimiter]
 	    @plain = options[:plain]
 	    # sorting options
-	    @list.sort_by!{|k| k[:price].to_f } if options[:sort] =~ /p/
-	    @list.sort_by!{|k| k[:change].to_f } if options[:sort] =~ /c/
+	    @list.sort_by!{|k| k[:price].to_f } if /^p/ =~ options[:sort]
+	    @list.sort_by!{|k| k[:change].to_f } if /^c/ =~ options[:sort]
 	    @list.reverse! if options[:sort] =~ /_desc/
 		end
 		def to_s
